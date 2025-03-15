@@ -66,3 +66,13 @@ for epoch in range(epochs):
 print("Training ended.")
 
 # Evaluation of model
+correct = 0
+total = 0
+
+with torch.no_grad():
+    for images, labels in testloader:
+        output = model(images)
+        _, predicted = torch.max(output, 1)
+        total += labels.size(0)
+        correct += (predicted == labels).sum().item()
+print(f"Precision on test set: {100 * correct / total:.2f}%")
