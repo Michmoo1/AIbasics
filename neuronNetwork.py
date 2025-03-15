@@ -76,3 +76,17 @@ with torch.no_grad():
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
 print(f"Precision on test set: {100 * correct / total:.2f}%")
+
+examples = iter(testloader)
+images, labels = next(examples)
+
+outputs = model(images)
+_, predictions = torch.max(outputs, 1)
+
+# Showing prediction
+fig, axes = plt.subplots(1, 6, figsize=(10, 3))
+for i in range(6):
+    axes[i].imshow(images[i].squeeze(), cmap='gray')
+    axes[i].set_title(f"Pred: {predictions[i].item()}")
+    axes[i].axis('off')
+plt.show()
